@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import SignUp from "./SignUp";
-import SignIn from "./SignIn";
+import SignIn from "./SignIn/SignIn";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {
@@ -17,8 +16,7 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={SignIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/homepage" component={App} />
+        <Route path="/" component={App} />
       </Switch>
     </Router>
   </React.StrictMode>,

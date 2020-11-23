@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,6 +15,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import { auth } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -83,7 +85,7 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -104,6 +106,15 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleSignOut = () => {
+    const promise = auth.signOut();
+    promise
+      .then((res) => {
+        setIsLoggedOut(true);
+      })
+      .catch((e) => console.log(e.message));
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -117,6 +128,7 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
   );
 
@@ -161,18 +173,20 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  return (
+  return isLoggedOut ? (
+    <Redirect to="/" />
+  ) : (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
+          <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton> */}
+          </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Koshi-Exam
           </Typography>

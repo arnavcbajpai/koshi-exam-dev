@@ -1,3 +1,5 @@
+// firebase configuration file along with authentication
+
 import firebase from "firebase/app";
 import "firebase/auth";
 

@@ -1,12 +1,12 @@
 import React from "react";
-import SignIn from "./SignIn";
-import Header from "./Header/Header";
+import Routes from "routes";
+import Header from "Header/Header";
 
 function App() {
   return (
     <div>
       <Header />
-      This is the app homepage.
+      <Routes />
     </div>
   );
 }
