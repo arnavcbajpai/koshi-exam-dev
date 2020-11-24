@@ -5,30 +5,18 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import MaterialLink from "@material-ui/core/Link";
 import { Redirect, Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import GTranslateOutlined from "@material-ui/icons/GTranslateOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { auth } from "../firebase";
-import Header from "../Header/Header";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <MaterialLink color="inherit" href="https://material-ui.com/">
-        COVID 19 Tracker
-      </MaterialLink>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { auth, googleProvider, facebookProvider } from "../firebase";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
+import Footer from "Footer/Footer";
+// import Header from "../Header/Header";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,6 +50,24 @@ export default function SignIn() {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+
+  const handleGoogleSignIn = () => {
+    auth
+      .signInWithPopup(googleProvider)
+      .then((res) => {
+        setIsLoggedIn(true);
+      })
+      .catch((e) => console.log(e.message));
+  };
+
+  const handleFacebookSignIn = () => {
+    auth
+      .signInWithPopup(facebookProvider)
+      .then((res) => {
+        setIsLoggedIn(true);
+      })
+      .catch((e) => console.log(e.message));
   };
 
   const handleSubmit = (e) => {
@@ -138,23 +144,38 @@ export default function SignIn() {
             style={{
               display: "flex",
               justifyContent: "center",
-              margin: "10px",
+              margin: " 20px 0",
             }}
           >
             <Button
               variant="outlined"
-              color="primary"
               className={classes.button}
-              startIcon={<GTranslateOutlined />}
+              startIcon={<FcGoogle />}
+              onClick={handleGoogleSignIn}
             >
               Sign In With Google
             </Button>
           </Grid>
+          <Grid
+            container
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: " 20px 0",
+            }}
+          >
+            <Button
+              variant="outlined"
+              className={classes.button}
+              startIcon={<AiFillFacebook />}
+              onClick={() => alert("Coming Soon!")}
+            >
+              Sign In With Facebook
+            </Button>
+          </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      <Footer />
     </Container>
   );
 }
