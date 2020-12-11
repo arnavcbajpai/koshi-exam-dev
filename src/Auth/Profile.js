@@ -5,29 +5,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import MaterialLink from "@material-ui/core/Link";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { auth } from "../firebase";
-import DatePicker from "../components/DatePicker";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <MaterialLink color="inherit" href="https://material-ui.com/">
-        Koshi-Exam
-      </MaterialLink>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import DatePicker from "../Date/DatePicker";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,6 +44,7 @@ export default function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignedUp, setIsSignedUp] = useState(false);
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -83,11 +69,14 @@ export default function SignUp() {
     promise
       .then((response) => {
         alert("Sign Up successful");
+        setIsSignedUp(true);
       })
       .catch((e) => console.log(e.message));
   };
 
-  return (
+  return isSignedUp ? (
+    <Redirect to="/homepage" />
+  ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -178,9 +167,6 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

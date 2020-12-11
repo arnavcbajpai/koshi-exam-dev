@@ -1,29 +1,16 @@
-import React from "react";
+import React,{Suspense} from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import SignIn from "./SignIn/SignIn";
+import "./index.css"; 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route path="/" component={App} />
-      </Switch>
-    </Router>
-  </React.StrictMode>,
+  < BrowserRouter>
+    <Suspense fallback={<div />}>
+      <App/>
+    </Suspense>   
+  </BrowserRouter>,
   document.getElementById("root")
-);
-
-// If you want to start measuring performance in your SignUp, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+); 
 reportWebVitals();

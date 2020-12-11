@@ -1,11 +1,13 @@
 import withRoot from 'Homepage/modules/withRoot'
 // --- Post bootstrap -----
 import React from 'react'
+import ProductCategories from './modules/views/ProductCategories'
+import ProductSmokingHero from './modules/views/ProductSmokingHero'
 import Container from '@material-ui/core/Container'
 import ProductHero from './modules/views/ProductHero'
 import ProductValues from './modules/views/ProductValues'
-import SignedCategories from './modules/views/SignedCategories'
-import ProductSmokingHero from './modules/views/ProductSmokingHero'
+import ProductHowItWorks from './modules/views/ProductHowItWorks'
+import ProductCTA from './modules/views/ProductCTA'
 
 import Footer from '../Footer/Footer'
 import Header from 'components/Header/Header'
@@ -30,7 +32,9 @@ function HomePageTest() {
       >
         <ProductHero />
         <ProductValues />
-        <SignedCategories />
+        <ProductCategories />
+        <ProductHowItWorks />
+        <ProductCTA />
         <ProductSmokingHero />
       </Container>
       <Footer />
